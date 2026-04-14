@@ -1,0 +1,54 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Contractor {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  name      String
+  wallet    String
+  workers   Worker[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Worker {
+  id           String      @id @default(cuid())
+  name         String
+  wallet       String
+  dailyWage    Float
+  role         String?
+  contractorId String
+  contractor   Contractor  @relation(fields: [contractorId], references: [id])
+  payments     Payment[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model Payment {
+  id        String   @id @default(cuid())
+  workerId  String
+  worker    Worker   @relation(fields: [workerId], references: [id])
+  amount    Float
+  txHash    String?
+  dodoId    String?
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+}
+
+model Invoice {
+  id          String   @id @default(cuid())
+  amount      Float
+  buyerEmail  String
+  sellerEmail String
+  description String?
+  escrowId    String?
+  status      String   @default("pending")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
