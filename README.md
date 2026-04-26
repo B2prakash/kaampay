@@ -7,7 +7,7 @@
 
 > *"Get paid today. Not in 90 days."*
 
-🌐 **Live Demo:** [kaampay.vercel.app](https://kaampay.vercel.app)
+🌐 **Live Demo:** https://kaampay-dapp.netlify.app/
 
 ---
 
